@@ -1,0 +1,23 @@
+# Part 1
+
+# dependencies
+part1/node_modules
+part1/.pnp
+part1/.pnp.js
+
+# testing
+part1/coverage
+
+# production
+part1/build
+
+# misc
+part1/.DS_Store
+part1/.env.local
+part1/.env.development.local
+part1/.env.test.local
+part1/.env.production.local
+
+part1/npm-debug.log*
+part1/yarn-debug.log*
+part1/yarn-error.log*
