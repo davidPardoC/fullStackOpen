@@ -30,12 +30,10 @@ const Total = ({ parts }) => {
   );
 };
 
-const Content = ({ parts }) => {
+const Content = ({ parts=[] }) => {
   return (
     <div>
-      <Part part={parts[0].name} excersices={parts[0].excersices} />
-      <Part part={parts[1].name} excersices={parts[1].excersices} />
-      <Part part={parts[2].name} excersices={parts[2].excersices} />
+      {parts.map((part)=><Part part={part.name} excersices={part.excersices} key={part.name} />)}
     </div>
   );
 };
