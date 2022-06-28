@@ -32,12 +32,18 @@ const App = () => {
 const Button = ({ text, onClick }) => <button onClick={onClick}>{text}</button>;
 
 const Statistics = ({ good, neutral, bad }) => {
+  const total = good+neutral+bad;
+  const positivePercentage = ( good*100) / total
+  const average = ( good - bad ) / total 
   return (
     <div>
       <h2>Statistics</h2>
       <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
+      <p>All {total}</p>
+      <p>positive {positivePercentage}</p>
+      <p>average {average}</p>
     </div>
   );
 };
