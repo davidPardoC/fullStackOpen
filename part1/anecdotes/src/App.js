@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 const App = () => {
-  const [anecdotes, setAnecdotes] = useState( [
+  const [topAnecdote, setTopAnecdote] = useState({});
+  const [anecdotes, setAnecdotes] = useState([
     { desc: "If it hurts, do it more often.", votes: 0 },
     {
       desc: "Adding manpower to a late software project makes it later!",
@@ -34,10 +35,18 @@ const App = () => {
   };
 
   const handleVote = () => {
-    const temp = [...anecdotes]
-    temp[selected].votes ++
-    setAnecdotes(temp)
-  }
+    const temp = [...anecdotes];
+    temp[selected].votes++;
+    setAnecdotes(temp);
+    getTopAnecdote();
+  };
+
+  const getTopAnecdote = () => {
+    const sorted = [...anecdotes].sort((a, b) =>
+      a.votes < b.botes ? 1 : a.votes > b.votes ? -1 : 0
+    );
+    setTopAnecdote(sorted[0]);
+  };
 
   return (
     <div>
@@ -46,6 +55,8 @@ const App = () => {
       <br />
       <button onClick={handleVote}>Vote</button>
       <button onClick={handleClick}>next anecdote</button>
+      <h3>Anecdote with most votes</h3>
+      {topAnecdote.desc}
     </div>
   );
 };
