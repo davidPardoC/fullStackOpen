@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Country from "./components/Country";
+import CountryItem from "./components/CountryItem";
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [country, setCountry] = useState("");
@@ -41,7 +42,7 @@ function App() {
           <p>Too many countries, specify filter </p>
         ) : (
           filteredCountries.map((country) => {
-            return <li key={country.name.common}>{country.name.common}</li>;
+            return <CountryItem key={country.name.common} country={country} />;
           })
         )}
       </ul>
