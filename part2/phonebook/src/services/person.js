@@ -12,6 +12,11 @@ const addPerson = async (person) => {
   return req.data;
 };
 
-const personServices = { getAll, addPerson };
+const deleteNote = async (id) => {
+  const req = await axios.delete(`${baseUrl}/${id}`);
+  return req.data;
+};
+
+const personServices = { getAll, addPerson, deleteNote };
 
 export default personServices;

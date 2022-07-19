@@ -36,7 +36,12 @@ const App = () => {
         }}
       />
       <h3>Numbers</h3>
-      <Persons persons={contactsToshow} />
+      <Persons
+        persons={contactsToshow}
+        onDeleteNote={(id) => {
+          setPersons(persons.filter((person) => person.id !== id));
+        }}
+      />
     </div>
   );
 };
