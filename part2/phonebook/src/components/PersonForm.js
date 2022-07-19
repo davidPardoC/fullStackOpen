@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import personServices from "../services/person";
 
 const PersonForm = ({ persons, onAddNote }) => {
   const [newName, setNewName] = useState("");
@@ -25,7 +26,9 @@ const PersonForm = ({ persons, onAddNote }) => {
       return;
     }
     const newPerson = { name: newName, number: newNumber };
-    onAddNote(newPerson);
+    personServices.addPerson(newPerson).then((person) => {
+      onAddNote(person);
+    });
     setNewName("");
     setNewNumber("");
   };
