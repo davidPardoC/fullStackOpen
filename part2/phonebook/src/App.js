@@ -34,6 +34,14 @@ const App = () => {
         onAddNote={(person) => {
           setPersons(persons.concat([person]));
         }}
+        onUpdate={(updatedPerson) => {
+          const idx = persons.findIndex(
+            (person) => person.id === updatedPerson.id
+          );
+          const updatedPersons = [...persons];
+          updatedPersons[idx] = updatedPerson;
+          setPersons(updatedPersons);
+        }}
       />
       <h3>Numbers</h3>
       <Persons

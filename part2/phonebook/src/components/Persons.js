@@ -2,9 +2,9 @@ import React from "react";
 import personServices from "../services/person";
 
 const Contact = ({ persons = [], onDeleteNote }) => {
-  const deleteNote = (id, name) => {
+  const deletePerson = (id, name) => {
     if (window.confirm(`Delete ${name}`)) {
-      personServices.deleteNote(id).then(() => {
+      personServices.deletePerson(id).then(() => {
         onDeleteNote(id);
       });
     }
@@ -16,7 +16,7 @@ const Contact = ({ persons = [], onDeleteNote }) => {
           {person.name} {person.number}
           <button
             onClick={() => {
-              deleteNote(person.id, person.name);
+              deletePerson(person.id, person.name);
             }}
           >
             Delete

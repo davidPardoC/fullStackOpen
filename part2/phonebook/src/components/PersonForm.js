@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import personServices from "../services/person";
 
-const PersonForm = ({ persons, onAddNote }) => {
+const PersonForm = ({ persons, onAddNote, onUpdate }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
 
@@ -18,11 +18,24 @@ const PersonForm = ({ persons, onAddNote }) => {
     if (!newName || !newNumber) {
       return;
     }
-    const person = persons.some(
+    const personIdx = persons.findIndex(
       (person) => person.name.toLowerCase() === newName.toLowerCase()
     );
-    if (person) {
-      alert(`${newName} is already added to phonebook`);
+    if (personIdx >= 0) {
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, replace the old number`
+        )
+      ) {
+        personServices
+          .updatePerson(persons[personIdx].id, {
+            ...persons[personIdx],
+            number: newNumber,
+          })
+          .then((person) => {
+            onUpdate(person);
+          });
+      }
       return;
     }
     const newPerson = { name: newName, number: newNumber };
