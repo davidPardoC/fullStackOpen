@@ -1,12 +1,15 @@
 import React from "react";
 import personServices from "../services/person";
 
-const Contact = ({ persons = [], onDeleteNote }) => {
+const Contact = ({ persons = [], onDeleteNote, onDeleteError }) => {
   const deletePerson = (id, name) => {
     if (window.confirm(`Delete ${name}`)) {
-      personServices.deletePerson(id).then(() => {
-        onDeleteNote(id);
-      });
+      personServices
+        .deletePerson(id)
+        .then(() => {
+          onDeleteNote(id);
+        })
+        .catch((error) => onDeleteError(error));
     }
   };
   return (

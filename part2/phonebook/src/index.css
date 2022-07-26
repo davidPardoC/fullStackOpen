@@ -1,5 +1,10 @@
 .error {
   color: red;
+  border: 4px solid red;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: rgb(200, 198, 198);
 }
 
 .success {

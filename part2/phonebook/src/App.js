@@ -46,6 +46,16 @@ const App = () => {
     hideNotification();
   };
 
+  const onDeleteError = (error) => {
+    if (error.response.status === 404) {
+      setNotification({
+        message: `Person already deleted`,
+        error: true,
+      });
+    }
+    hideNotification();
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -67,6 +77,7 @@ const App = () => {
         onDeleteNote={(id) => {
           setPersons(persons.filter((person) => person.id !== id));
         }}
+        onDeleteError={onDeleteError}
       />
     </div>
   );
