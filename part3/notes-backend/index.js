@@ -51,13 +51,20 @@ const generateId = () => {
   return Math.max(...sanitazed) + 1;
 };
 
+const nameAlreadyExists = (name) => {
+  return persons.some((person) => person.name === name);
+};
+
 app.post("/api/persons", (req, res) => {
   const { name, number } = req.body;
   if (!name || !number) {
     return res.status(400).send();
   }
+  if (nameAlreadyExists(name)) {
+    return res.status(409).json({ error: "name must be unique" });
+  }
   persons.push({ id: generateId(), name, number });
-  res.sendStatus(201);
+  return res.sendStatus(201);
 });
 
 app.get("/info", (req, res) => {
