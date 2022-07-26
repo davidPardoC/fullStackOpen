@@ -29,6 +29,15 @@ app.get("/api/persons", (req, res) => {
   return res.json(persons);
 });
 
+app.get("/api/persons/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const index = persons.findIndex((person) => person.id === id);
+  if (index < 0) {
+    return res.status(404).send();
+  }
+  return res.json(persons[index]);
+});
+
 app.get("/info", (req, res) => {
   return res.send(
     `<div>
