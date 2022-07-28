@@ -8,6 +8,8 @@ coverage
 
 # production
 part1/build
+part3/phonebook-be/build
+
 
 # misc
 .DS_Store
