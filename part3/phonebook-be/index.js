@@ -36,26 +36,15 @@ app.delete("/api/persons/:id", (req, res) => {
   return res.status(204).send();
 });
 
-const generateId = () => {
-  const sanitazed = persons.map((person) => person.id);
-  return Math.max(...sanitazed) + 1;
-};
-
-const nameAlreadyExists = (name) => {
-  return persons.some((person) => person.name === name);
-};
-
 app.post("/api/persons", (req, res) => {
   const { name, number } = req.body;
   if (!name || !number) {
     return res.status(400).send();
   }
-  if (nameAlreadyExists(name)) {
-    return res.status(409).json({ error: "name must be unique" });
-  }
-  const newPerson = { id: generateId(), name, number };
-  persons.push(newPerson);
-  return res.status(201).json(newPerson);
+  const person = new Person({ name, number, date: new Date() });
+  person.save().then((person) => {
+    res.status(201).json(person);
+  });
 });
 
 app.get("/info", (req, res) => {
