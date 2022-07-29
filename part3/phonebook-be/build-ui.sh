@@ -1,4 +1,4 @@
-cd ../../part2/phonebook
+cd ../fullStackOpen/part2/phonebook
 npm run build
 echo $PWD
-cp -R build ../../part3/phonebook-be
+cp -R build ../../../phonebook-be
