@@ -25,16 +25,26 @@ const App = () => {
   const hideNotification = () => {
     setTimeout(() => {
       setNotification({});
-    }, 1000);
+    }, 2000);
   };
 
-  const onAddPerson = (person) => {
+  const onAddPerson = (person, err) => {
+    if (err) {
+      setNotification({ message: err, error: true });
+      hideNotification();
+      return;
+    }
     setPersons(persons.concat([person]));
     setNotification({ message: `Person ${person.name} Added`, error: false });
     hideNotification();
   };
 
-  const onUpdatePerson = (updatedPerson) => {
+  const onUpdatePerson = (updatedPerson, err) => {
+    if (err) {
+      setNotification({ message: err, error: true });
+      hideNotification();
+      return;
+    }
     const idx = persons.findIndex((person) => person.id === updatedPerson.id);
     const updatedPersons = [...persons];
     updatedPersons[idx] = updatedPerson;

@@ -34,14 +34,22 @@ const PersonForm = ({ persons, onAddNote, onUpdate }) => {
           })
           .then((person) => {
             onUpdate(person);
+          })
+          .catch((error) => {
+            onAddNote({}, error.response.data.error);
           });
       }
       return;
     }
     const newPerson = { name: newName, number: newNumber };
-    personServices.addPerson(newPerson).then((person) => {
-      onAddNote(person);
-    });
+    personServices
+      .addPerson(newPerson)
+      .then((person) => {
+        onAddNote(person);
+      })
+      .catch((error) => {
+        onAddNote({}, error.response.data.error);
+      });
     setNewName("");
     setNewNumber("");
   };
