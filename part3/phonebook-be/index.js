@@ -39,21 +39,26 @@ app.delete("/api/persons/:id", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-app.post("/api/persons", (req, res) => {
+app.post("/api/persons", (req, res, next) => {
   const { name, number } = req.body;
-  if (!name || !number) {
-    return res.status(400).send();
-  }
+
   const person = new Person({ name, number, date: new Date() });
-  person.save().then((person) => {
-    res.status(201).json(person);
-  });
+  person
+    .save()
+    .then((person) => {
+      res.status(201).json(person);
+    })
+    .catch((err) => next(err));
 });
 
 app.put("/api/persons/:id", (req, res, next) => {
   const { name, number } = req.body;
   const { id } = req.params;
-  Person.findByIdAndUpdate(id, { name, number }, { new: true })
+  Person.findByIdAndUpdate(
+    id,
+    { name, number },
+    { new: true, runValidators: true, context: "query" }
+  )
     .then((updatedPerson) => {
       res.json(updatedPerson);
     })
@@ -73,6 +78,8 @@ const errorHandler = (err, req, res, next) => {
   console.log(err.message);
   if (err.name === "CastError") {
     return res.status(400).json({ error: "id malformed" });
+  } else if (err.name === "ValidationError") {
+    return res.status(400).json({ error: err.message });
   }
   next(err);
 };
