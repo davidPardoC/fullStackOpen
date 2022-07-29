@@ -21,13 +21,13 @@ app.get("/api/persons", (req, res) => {
   });
 });
 
-app.get("/api/persons/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const index = persons.findIndex((person) => person.id === id);
-  if (index < 0) {
-    return res.status(404).send();
-  }
-  return res.json(persons[index]);
+app.get("/api/persons/:id", (req, res, next) => {
+  const { id } = req.params;
+  Person.findById(id)
+    .then((person) => {
+      res.json(person);
+    })
+    .catch((err) => next(err));
 });
 
 app.delete("/api/persons/:id", (req, res, next) => {
