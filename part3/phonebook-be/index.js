@@ -30,10 +30,13 @@ app.get("/api/persons/:id", (req, res) => {
   return res.json(persons[index]);
 });
 
-app.delete("/api/persons/:id", (req, res) => {
-  const id = Number(req.params.id);
-  persons = persons.filter((person) => person.id !== id);
-  return res.status(204).send();
+app.delete("/api/persons/:id", (req, res, next) => {
+  const { id } = req.params;
+  Person.findByIdAndDelete(id)
+    .then(() => {
+      res.status(204).end();
+    })
+    .catch((err) => next(err));
 });
 
 app.post("/api/persons", (req, res) => {
@@ -55,6 +58,16 @@ app.get("/info", (req, res) => {
     </div>`
   );
 });
+
+const errorHandler = (err, req, res, next) => {
+  console.log(err.message);
+  if (err.name === "CastError") {
+    return res.status(400).json({ error: "id malformed" });
+  }
+  next(err);
+};
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
