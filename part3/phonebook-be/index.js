@@ -50,6 +50,16 @@ app.post("/api/persons", (req, res) => {
   });
 });
 
+app.put("/api/persons/:id", (req, res, next) => {
+  const { name, number } = req.body;
+  const { id } = req.params;
+  Person.findByIdAndUpdate(id, { name, number }, { new: true })
+    .then((updatedPerson) => {
+      res.json(updatedPerson);
+    })
+    .catch((err) => next(err));
+});
+
 app.get("/info", (req, res) => {
   return res.send(
     `<div>
