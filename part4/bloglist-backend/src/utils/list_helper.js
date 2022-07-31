@@ -34,4 +34,24 @@ const mostBlogs = (blogs = []) => {
   return mostBlogsAuthor
 }
 
-module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs }
+const mostLikes = (blogs = []) => {
+  const grupedByAuthor = {}
+  blogs.forEach((blog) => {
+    if (grupedByAuthor[blog.author]) {
+      grupedByAuthor[blog.author] = grupedByAuthor[blog.author] + blog.likes
+    } else {
+      grupedByAuthor[blog.author] = blog.likes
+    }
+  })
+  const groupedArray = Object.keys(grupedByAuthor).map((key) => ({
+    author: key,
+    likes: grupedByAuthor[key],
+  }))
+  const mappedLikes = groupedArray.map((author) => author.likes)
+  const index = groupedArray.findIndex(
+    (author) => author.likes === Math.max(...mappedLikes)
+  )
+  return groupedArray[index]
+}
+
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes }
