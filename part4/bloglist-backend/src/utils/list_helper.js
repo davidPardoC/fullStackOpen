@@ -16,4 +16,11 @@ const totalLikes = (blogs = []) => {
   return result
 }
 
-module.exports = { dummy, totalLikes }
+const favoriteBlog = (blogs = []) => {
+  const likes = blogs.map((blog) => blog.likes)
+  const maxLikes = Math.max(...likes)
+  const index = blogs.findIndex((blog) => blog.likes === maxLikes)
+  return blogs[index]
+}
+
+module.exports = { dummy, totalLikes, favoriteBlog }

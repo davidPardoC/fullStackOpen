@@ -25,3 +25,10 @@ describe('total likes', () => {
     expect(result).toBe(36)
   })
 })
+
+describe('favorite blog', () => {
+  test('should return favorite blog', () => {
+    const result = listHelper.favoriteBlog(blogsStub)
+    expect(result).toEqual(blogsStub[2])
+  })
+})
