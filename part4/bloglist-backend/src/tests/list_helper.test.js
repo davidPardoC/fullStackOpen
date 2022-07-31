@@ -1,5 +1,6 @@
 const listHelper = require('../utils/list_helper')
 const { blogsStub } = require('./stubs/bloglist.stub')
+
 describe('Dummy', () => {
   test('dummy returns one', () => {
     const blogs = []
@@ -22,13 +23,21 @@ describe('total likes', () => {
   })
   test('of a bigger list is calculated rigth', () => {
     const result = listHelper.totalLikes(blogsStub)
-    expect(result).toBe(36)
+    expect(result).toBe(43)
   })
 })
 
 describe('favorite blog', () => {
   test('should return favorite blog', () => {
     const result = listHelper.favoriteBlog(blogsStub)
-    expect(result).toEqual(blogsStub[2])
+    expect(result).toEqual(blogsStub[3])
+  })
+})
+
+describe('Most blogs', () => {
+  test('should return authors with most blogs', () => {
+    const result = listHelper.mostBlogs(blogsStub)
+    const expectedResult = { author: 'Michael Chan', blogs: 2 }
+    expect(result).toEqual(expectedResult)
   })
 })

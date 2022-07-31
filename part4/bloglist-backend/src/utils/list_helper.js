@@ -23,4 +23,15 @@ const favoriteBlog = (blogs = []) => {
   return blogs[index]
 }
 
-module.exports = { dummy, totalLikes, favoriteBlog }
+const mostBlogs = (blogs = []) => {
+  let mostBlogsAuthor = { blogs: 0, author: blogs[0].author || '' }
+  blogs.forEach((blog) => {
+    if (blog.author === mostBlogsAuthor.author) {
+      mostBlogsAuthor.author = blog.author
+      mostBlogsAuthor.blogs = mostBlogsAuthor.blogs + 1
+    }
+  })
+  return mostBlogsAuthor
+}
+
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs }
