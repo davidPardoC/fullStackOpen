@@ -57,7 +57,7 @@ describe('Blog Api ', () => {
     expect(body.length).toEqual(3)
   })
 
-  test.only('POST: should default likes to 0 if property is not defined', async () => {
+  test('POST: should default likes to 0 if property is not defined', async () => {
     const newBlog = {
       title: 'Test New Blog',
       author: 'Test Author',
@@ -71,5 +71,14 @@ describe('Blog Api ', () => {
       url: 'testUrl.com',
       likes: 0,
     })
+  })
+
+  test('should return 400 on no "url" property on request', async () => {
+    const newBlog = {
+      title: 'Test New Blog',
+      author: 'Test Author',
+    }
+    const response = await api.post('/api/blogs').send(newBlog)
+    expect(response.status).toEqual(400)
   })
 })
