@@ -20,7 +20,7 @@ const initialBlogs = [
   },
 ]
 
-describe('Blog Api', () => {
+describe('Blog Api GET', () => {
   beforeEach(async () => {
     await Blog.deleteMany({})
     for (let index = 0; index < initialBlogs.length; index++) {
@@ -33,9 +33,14 @@ describe('Blog Api', () => {
     mongoose.connection.close()
   })
 
-  test('GET: blogs are returned as JSON and have the length of 2', async () => {
+  test('blogs are returned as JSON and have the length of 2', async () => {
     const response = await api.get('/api/blogs')
     expect(response.headers['content-type']).toContain('application/json')
     expect(response.body.length).toEqual(2)
+  })
+
+  test('blogs contain and "id" property', async () => {
+    const response = await api.get('/api/blogs')
+    expect(response.body[0].id).toBeDefined()
   })
 })
