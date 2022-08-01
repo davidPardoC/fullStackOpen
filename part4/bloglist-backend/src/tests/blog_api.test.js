@@ -73,12 +73,19 @@ describe('Blog Api ', () => {
     })
   })
 
-  test('should return 400 on no "url" property on request', async () => {
+  test('POST: should return 400 on no "url" property on request', async () => {
     const newBlog = {
       title: 'Test New Blog',
       author: 'Test Author',
     }
     const response = await api.post('/api/blogs').send(newBlog)
     expect(response.status).toEqual(400)
+  })
+
+  test('DELETE: should delete a blog', async () => {
+    const { body: blogs } = await api.get('/api/blogs')
+    await api.delete(`/api/blogs/${blogs[0].id}`)
+    const { body: blogs2 } = await api.get('/api/blogs')
+    expect(blogs2.length).toEqual(1)
   })
 })
