@@ -56,4 +56,20 @@ describe('Blog Api ', () => {
     const { body } = await api.get('/api/blogs')
     expect(body.length).toEqual(3)
   })
+
+  test.only('POST: should default likes to 0 if property is not defined', async () => {
+    const newBlog = {
+      title: 'Test New Blog',
+      author: 'Test Author',
+      url: 'testUrl.com',
+    }
+    const response = await api.post('/api/blogs').send(newBlog)
+    expect(response.status).toEqual(201)
+    expect(response.body).toMatchObject({
+      title: 'Test New Blog',
+      author: 'Test Author',
+      url: 'testUrl.com',
+      likes: 0,
+    })
+  })
 })
