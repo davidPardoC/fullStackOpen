@@ -88,4 +88,20 @@ describe('Blog Api ', () => {
     const { body: blogs2 } = await api.get('/api/blogs')
     expect(blogs2.length).toEqual(1)
   })
+
+  test('UPDATE: should update a blog', async () => {
+    const { body: blogs } = await api.get('/api/blogs')
+    const updatedBlog = {
+      title: 'Updated blog',
+      author: 'Updated Author',
+      url: 'updatedUrl',
+      likes: 0,
+    }
+    const updateResponse = await api
+      .put(`/api/blogs/${blogs[0].id}`)
+      .send(updatedBlog)
+
+    expect(updateResponse.status).toEqual(200)
+    expect(updateResponse.body).toMatchObject(updatedBlog)
+  })
 })
