@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt')
 
 userRouter.post('/', async (req, res) => {
   const { username, password, name } = req.body
+  if (password.length < 3) {
+    return res.status(400).json({ message: 'Invalid Password' })
+  }
   const saltRounds = 10
   const hashedPassword = bcrypt.hashSync(password, saltRounds)
   const user = new User({ username, name, password: hashedPassword })
