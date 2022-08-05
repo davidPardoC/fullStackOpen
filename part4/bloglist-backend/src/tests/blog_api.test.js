@@ -2,8 +2,11 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const api = supertest(app)
+
+const testUser = { username: 'testUser', password: 'testPassword' }
 
 const initialBlogs = [
   {
@@ -20,6 +23,8 @@ const initialBlogs = [
   },
 ]
 
+let token
+
 describe('Blog Api ', () => {
   beforeEach(async () => {
     await Blog.deleteMany({})
@@ -29,7 +34,14 @@ describe('Blog Api ', () => {
     }
   })
 
-  afterAll(() => {
+  beforeAll(async () => {
+    await api.post('/api/users').send(testUser)
+    const response = await api.post('/api/login').send(testUser)
+    token = response.body.token
+  })
+
+  afterAll(async () => {
+    await User.deleteMany({})
     mongoose.connection.close()
   })
 
@@ -51,7 +63,11 @@ describe('Blog Api ', () => {
       url: 'testUrl.com',
       likes: 6,
     }
-    const response = await api.post('/api/blogs').send(newBlog)
+    const response = await api
+      .post('/api/blogs')
+      .set('authorization', `Bearer ${token}`)
+      .send(newBlog)
+
     expect(response.status).toEqual(201)
     const { body } = await api.get('/api/blogs')
     expect(body.length).toEqual(3)
@@ -63,7 +79,10 @@ describe('Blog Api ', () => {
       author: 'Test Author',
       url: 'testUrl.com',
     }
-    const response = await api.post('/api/blogs').send(newBlog)
+    const response = await api
+      .post('/api/blogs')
+      .set('authorization', `Bearer ${token}`)
+      .send(newBlog)
     expect(response.status).toEqual(201)
     expect(response.body).toMatchObject({
       title: 'Test New Blog',
@@ -78,15 +97,23 @@ describe('Blog Api ', () => {
       title: 'Test New Blog',
       author: 'Test Author',
     }
-    const response = await api.post('/api/blogs').send(newBlog)
+    const response = await api
+      .post('/api/blogs')
+      .set('authorization', `Bearer ${token}`)
+      .send(newBlog)
     expect(response.status).toEqual(400)
   })
 
   test('DELETE: should delete a blog', async () => {
-    const { body: blogs } = await api.get('/api/blogs')
-    await api.delete(`/api/blogs/${blogs[0].id}`)
+    const response = await api
+      .post('/api/blogs')
+      .set('authorization', `Bearer ${token}`)
+      .send(initialBlogs[0])
+    await api
+      .delete(`/api/blogs/${response.body.id}`)
+      .set('authorization', `Bearer ${token}`)
     const { body: blogs2 } = await api.get('/api/blogs')
-    expect(blogs2.length).toEqual(1)
+    expect(blogs2.length).toEqual(2)
   })
 
   test('UPDATE: should update a blog', async () => {
