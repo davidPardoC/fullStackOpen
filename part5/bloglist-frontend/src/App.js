@@ -9,24 +9,31 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+    const user = JSON.parse(localStorage.getItem("userLogged"));
+    setUser(user);
+    if (user) {
+      blogService.getAll().then((blogs) => setBlogs(blogs));
+    }
   }, []);
 
   const onLogin = (user) => {
     setUser(user);
+    blogService.getAll().then((blogs) => setBlogs(blogs));
   };
-
-  if (!user) {
-    return <LoginForm onLogin={onLogin} />;
-  }
 
   return (
     <div>
-      <h2>Blogs</h2>
-      <UserInfo user={user} />
-      {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
-      ))}
+      {!user ? (
+        <LoginForm onLogin={onLogin} />
+      ) : (
+        <>
+          <h2>Blogs</h2>
+          <UserInfo user={user} />
+          {blogs.map((blog) => (
+            <Blog key={blog.id} blog={blog} />
+          ))}
+        </>
+      )}
     </div>
   );
 };

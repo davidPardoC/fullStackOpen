@@ -16,12 +16,17 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload);
 }
 
+const logout = () => {
+  localStorage.removeItem("userLogged");
+};
+
 const UserInfo = ({ user: { token = "" } }) => {
   const user = parseJwt(token);
   return (
     <div>
       <p>
         <b>Username: </b> {user.username} logged in
+        <button onClick={logout}>Logout</button>
       </p>
     </div>
   );

@@ -18,6 +18,7 @@ const LoginForm = ({ onLogin, onError }) => {
     e.preventDefault();
     try {
       const { data } = await loginService.login({ username, password });
+      localStorage.setItem("userLogged", JSON.stringify(data));
       onLogin(data);
     } catch (error) {
       onError(error);
