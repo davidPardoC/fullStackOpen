@@ -1,27 +1,28 @@
-import React from "react";
+import PropTypes from 'prop-types'
+import React from 'react'
 
 function parseJwt(token) {
-  var base64Url = token.split(".")[1];
-  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var base64Url = token.split('.')[1]
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
   var jsonPayload = decodeURIComponent(
     window
       .atob(base64)
-      .split("")
+      .split('')
       .map(function (c) {
-        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
       })
-      .join("")
-  );
+      .join('')
+  )
 
-  return JSON.parse(jsonPayload);
+  return JSON.parse(jsonPayload)
 }
 
 const logout = () => {
-  localStorage.removeItem("userLogged");
-};
+  localStorage.removeItem('userLogged')
+}
 
-const UserInfo = ({ user: { token = "" } }) => {
-  const user = parseJwt(token);
+const UserInfo = ({ user: { token = '' } }) => {
+  const user = parseJwt(token)
   return (
     <div>
       <p>
@@ -29,7 +30,11 @@ const UserInfo = ({ user: { token = "" } }) => {
         <button onClick={logout}>Logout</button>
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default UserInfo;
+UserInfo.propTypes = {
+  user: PropTypes.object.isRequired,
+}
+
+export default UserInfo

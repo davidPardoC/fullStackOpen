@@ -1,29 +1,29 @@
-import React from "react";
-import { useState } from "react";
-import loginService from "../services/login";
+import React from 'react'
+import { useState } from 'react'
+import loginService from '../services/login'
 
 const LoginForm = ({ onLogin, onError }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleUsername = (e) => {
-    setUsername(e.target.value);
-  };
+    setUsername(e.target.value)
+  }
 
   const handlePassword = (e) => {
-    setPassword(e.target.value);
-  };
+    setPassword(e.target.value)
+  }
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const { data } = await loginService.login({ username, password });
-      localStorage.setItem("userLogged", JSON.stringify(data));
-      onLogin(data);
+      const { data } = await loginService.login({ username, password })
+      localStorage.setItem('userLogged', JSON.stringify(data))
+      onLogin(data)
     } catch (error) {
-      onError(error);
+      onError(error)
     }
-  };
+  }
 
   return (
     <form onSubmit={onSubmit}>
@@ -42,7 +42,7 @@ const LoginForm = ({ onLogin, onError }) => {
       />
       <input type="submit" value="Login" />
     </form>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm
