@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import blogService from '../services/blogs'
 import './Blog.css'
 import Togglable from './Togglable'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog: listBlog, onDelete }) => {
   const [blog, setBlog] = useState(listBlog)
@@ -32,7 +33,11 @@ const Blog = ({ blog: listBlog, onDelete }) => {
   return (
     <div className="blog">
       <div>
-        {blog.title}
+        <div className="blogHeader">
+          <div>{blog.title}</div>
+          <div>{blog.author}</div>
+        </div>
+
         <button onClick={toggle}>{visible ? 'hide' : 'show'}</button>
       </div>
       <Togglable ref={toggleRef} showButton={false}>
@@ -46,6 +51,11 @@ const Blog = ({ blog: listBlog, onDelete }) => {
       </Togglable>
     </div>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
 }
 
 export default Blog

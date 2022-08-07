@@ -8,4 +8,10 @@
 .blog div {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+}
+
+.blogHeader {
+  display: flex;
+  flex-direction: column;
 }
