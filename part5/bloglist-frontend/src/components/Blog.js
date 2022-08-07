@@ -4,7 +4,7 @@ import blogService from "../services/blogs";
 import "./Blog.css";
 import Togglable from "./Togglable";
 
-const Blog = ({ blog: listBlog }) => {
+const Blog = ({ blog: listBlog, onDelete }) => {
   const [blog, setBlog] = useState(listBlog);
   const [visible, setVisible] = useState(false);
   const toggleRef = useRef(null);
@@ -21,6 +21,14 @@ const Blog = ({ blog: listBlog }) => {
     setBlog(updatedBlog);
   };
 
+  const deletePost = async () => {
+    const shouldDeleteBlog = window.confirm(`Remove blog ${blog.title} ?`);
+    if (shouldDeleteBlog) {
+      await blogService.removeBlog(blog.id);
+      onDelete();
+    }
+  };
+
   return (
     <div className="blog">
       <div>
@@ -33,6 +41,7 @@ const Blog = ({ blog: listBlog }) => {
           <div>
             likes: {blog.likes} <button onClick={likePost}>like</button>
           </div>
+          <button onClick={deletePost}>Remove</button>
         </div>
       </Togglable>
     </div>

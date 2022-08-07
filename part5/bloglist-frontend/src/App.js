@@ -87,7 +87,7 @@ const App = () => {
             <BlogForm onSuccess={onAddedBlog} onError={onAddBlogError} />
           </Togglable>
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
+            <Blog onDelete={getBlogs} key={blog.id} blog={blog} />
           ))}
         </>
       )}

@@ -14,7 +14,7 @@ const Togglable = forwardRef(
       setVisible(!visible);
     };
     useEffect(() => {
-      const childHeightRaw = ref.current?.clientHeight + 50;
+      const childHeightRaw = ref.current?.clientHeight + 60;
       const childHeight = `${childHeightRaw / 16}rem`;
       setChildHeight(childHeight);
     }, []);
