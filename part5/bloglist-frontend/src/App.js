@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useState, useEffect } from "react";
 import Blog from "./components/Blog";
 import BlogForm from "./components/BlogForm";
@@ -11,6 +12,8 @@ const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [notification, setNotification] = useState(null);
+
+  const blogToggleRef = useRef(null);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("userLogged"));
@@ -37,6 +40,7 @@ const App = () => {
       message: `a new blog ${blog.title} added`,
     });
     setBlogs(blogs.concat([blog]));
+    blogToggleRef.current.toggleVisisble();
     setTimeout(() => {
       setNotification(false);
     }, 3000);
@@ -71,7 +75,7 @@ const App = () => {
         <>
           <h2>Blogs</h2>
           <UserInfo user={user} />
-          <Togglable label="Add Blog">
+          <Togglable ref={blogToggleRef} label="Add Blog">
             <BlogForm onSuccess={onAddedBlog} onError={onAddBlogError} />
           </Togglable>
           {blogs.map((blog) => (

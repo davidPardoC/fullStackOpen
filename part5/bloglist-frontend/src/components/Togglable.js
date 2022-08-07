@@ -1,13 +1,14 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import "./Togglable.css";
 
-const Togglable = ({ children, label = "" }) => {
+const Togglable = forwardRef(({ children, label = "" }, refs) => {
   const ref = useRef();
   const [childHeight, setChildHeight] = useState(0);
   const [visible, setVisible] = useState(false);
+
   const toggleVisisble = () => {
     setVisible(!visible);
   };
@@ -16,6 +17,13 @@ const Togglable = ({ children, label = "" }) => {
     const childHeight = `${childHeightRaw / 16}rem`;
     setChildHeight(childHeight);
   }, []);
+
+  useImperativeHandle(refs, () => {
+    return {
+      toggleVisisble,
+    };
+  });
+
   return (
     <div>
       <div className="content" style={{ maxHeight: visible ? childHeight : 0 }}>
@@ -24,6 +32,6 @@ const Togglable = ({ children, label = "" }) => {
       <button onClick={toggleVisisble}>{!visible ? label : "cancel"}</button>
     </div>
   );
-};
+});
 
 export default Togglable;
