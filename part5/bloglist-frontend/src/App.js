@@ -31,7 +31,15 @@ const App = () => {
   };
 
   const getBlogs = () => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+    blogService.getAll().then((blogs) => {
+      const sorted = blogs.sort((a, b) => {
+        if (a.likes > b.likes) {
+          return -1;
+        }
+        return 1;
+      });
+      setBlogs(sorted);
+    });
   };
 
   const onAddedBlog = (blog) => {
