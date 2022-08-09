@@ -74,6 +74,16 @@ const App = () => {
     }, 3000)
   }
 
+  const onDeleteError = (error) => {
+    setNotification({
+      error: true,
+      message: error.response.data.message || error.message,
+    })
+    setTimeout(() => {
+      setNotification(false)
+    }, 3000)
+  }
+
   return (
     <div>
       {notification && <Notification notification={notification} />}
@@ -87,7 +97,12 @@ const App = () => {
             <BlogForm onSuccess={onAddedBlog} onError={onAddBlogError} />
           </Togglable>
           {blogs.map((blog) => (
-            <Blog onDelete={getBlogs} key={blog.id} blog={blog} />
+            <Blog
+              onDelete={getBlogs}
+              key={blog.id}
+              blog={blog}
+              onDeleteError={onDeleteError}
+            />
           ))}
         </>
       )}

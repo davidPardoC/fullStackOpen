@@ -5,7 +5,7 @@ import './Blog.css'
 import Togglable from './Togglable'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog: listBlog, onDelete }) => {
+const Blog = ({ blog: listBlog, onDelete, onDeleteError }) => {
   const [blog, setBlog] = useState(listBlog)
   const [visible, setVisible] = useState(false)
   const toggleRef = useRef(null)
@@ -25,8 +25,12 @@ const Blog = ({ blog: listBlog, onDelete }) => {
   const deletePost = async () => {
     const shouldDeleteBlog = window.confirm(`Remove blog ${blog.title} ?`)
     if (shouldDeleteBlog) {
-      await blogService.removeBlog(blog.id)
-      onDelete()
+      try {
+        await blogService.removeBlog(blog.id)
+        onDelete()
+      } catch (error) {
+        onDeleteError(error)
+      }
     }
   }
 
