@@ -13,5 +13,8 @@ describe('Add Blog', () => {
     cy.contains('Url:').parent().find('input').type(testBlog.url)
     cy.get('[value="Create"]').click()
     cy.contains('show').parent().contains(testBlog.title)
+    cy.contains('show').click()
+    cy.contains('like').click()
+    cy.contains('1')
   })
 })
