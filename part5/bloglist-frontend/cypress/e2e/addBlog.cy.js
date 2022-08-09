@@ -36,6 +36,8 @@ describe('Add Blog', () => {
       .parent()
       .contains('Remove')
       .click()
+    cy.get('.blog').eq(0).should('contain', testBlog.title)
+    cy.get('.blog').eq(1).should('contain', 'Test blog 2')
     cy.contains('show').click()
     cy.contains('Remove').click()
     cy.contains('Request failed with status code 403')
