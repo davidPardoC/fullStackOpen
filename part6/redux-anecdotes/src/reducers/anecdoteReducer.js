@@ -28,6 +28,8 @@ const reducer = (state = initialState, action) => {
         }
         return anecdote;
       });
+    case "ADD":
+      return state.concat(asObject(action.data.anecdote));
     default:
       return state;
   }

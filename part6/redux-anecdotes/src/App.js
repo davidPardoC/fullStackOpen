@@ -9,6 +9,17 @@ const App = () => {
     dispatch(action);
   };
 
+  const addAnecdote = (e) => {
+    e.preventDefault();
+    const anecdote = e.target.newNote.value;
+    if (!anecdote) {
+      return;
+    }
+    e.target.newNote.value = "";
+    const action = { type: "ADD", data: { anecdote } };
+    dispatch(action);
+  };
+
   return (
     <div>
       <h2>Anecdotes</h2>
@@ -22,9 +33,9 @@ const App = () => {
         </div>
       ))}
       <h2>create new</h2>
-      <form>
+      <form onSubmit={addAnecdote}>
         <div>
-          <input />
+          <input name="newNote" />
         </div>
         <button>create</button>
       </form>
