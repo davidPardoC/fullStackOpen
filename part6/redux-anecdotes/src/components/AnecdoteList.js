@@ -11,7 +11,7 @@ const sortFunction = (a, b) => {
 };
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector((state) => state.sort(sortFunction));
+  const anecdotes = useSelector((state) => [...state].sort(sortFunction));
   const dispatch = useDispatch();
 
   const vote = (id) => {
