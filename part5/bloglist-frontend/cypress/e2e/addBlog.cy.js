@@ -6,6 +6,10 @@ describe('Add Blog', () => {
     cy.registerUser(testUser)
     cy.login(testUser)
   })
+
+  beforeEach(function () {
+    cy.viewport('iphone-6')
+  })
   it('A blog can be created', () => {
     cy.contains('Add Blog').click()
     cy.contains('Title:').parent().find('input').type(testBlog.title)
