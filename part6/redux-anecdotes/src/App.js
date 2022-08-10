@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import { createAnecdote, vote as voteAction } from "./reducers/anecdoteReducer";
 
 const sortFunction = (a, b) => {
   if (a.votes < b.votes) {
@@ -13,8 +14,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   const vote = (id) => {
-    const action = { type: "VOTE", data: { id } };
-    dispatch(action);
+    dispatch(voteAction(id));
   };
 
   const addAnecdote = (e) => {
@@ -24,8 +24,7 @@ const App = () => {
       return;
     }
     e.target.newNote.value = "";
-    const action = { type: "ADD", data: { anecdote } };
-    dispatch(action);
+    dispatch(createAnecdote(anecdote));
   };
 
   return (
