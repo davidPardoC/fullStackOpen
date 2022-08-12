@@ -11,7 +11,10 @@ const sortFunction = (a, b) => {
 };
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector((state) => [...state].sort(sortFunction));
+  const anecdotes = useSelector((state) => {
+    const anecdotes = [...state.anecdotes];
+    return anecdotes.sort(sortFunction);
+  });
   const dispatch = useDispatch();
 
   const vote = (id) => {

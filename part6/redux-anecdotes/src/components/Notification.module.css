@@ -1,0 +1,19 @@
+.notificationContainer {
+  position: absolute;
+  border: solid 3px rgb(24, 189, 24);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  color: rgb(24, 189, 24);
+  animation: slideIn 0.5s none;
+  right: 1rem;
+  background-color: white;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
