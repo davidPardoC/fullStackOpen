@@ -1,11 +1,10 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { anecdoteCreator } from "../reducers/anecdoteReducer";
 
 const getId = () => (100000 * Math.random()).toFixed(0);
 
-const AnecdoteForm = () => {
-  const dispatch = useDispatch();
+const AnecdoteForm = ({ dispatch }) => {
   const addAnecdote = async (e) => {
     e.preventDefault();
     const anecdote = { content: e.target.newNote.value, id: getId(), votes: 0 };
@@ -27,4 +26,4 @@ const AnecdoteForm = () => {
   );
 };
 
-export default AnecdoteForm;
+export default connect()(AnecdoteForm);
