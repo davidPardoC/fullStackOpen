@@ -11,19 +11,29 @@ const sortFunction = (a, b) => {
 };
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector((state) => {
-    const anecdotes = [...state.anecdotes];
-    return anecdotes.sort(sortFunction);
-  });
+  const {
+    anecdotes,
+    filter: { filter },
+  } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const vote = (id) => {
     dispatch(voteAction(id));
   };
 
+  const sortedAnecdotes = () => {
+    const sortedAnecdotes = [...anecdotes].sort(sortFunction);
+    if (!filter) {
+      return sortedAnecdotes;
+    }
+    return sortedAnecdotes.filter((anecdote) =>
+      anecdote.content.includes(filter)
+    );
+  };
+
   return (
     <>
-      {anecdotes.map((anecdote) => (
+      {sortedAnecdotes().map((anecdote) => (
         <div key={anecdote.id}>
           <div>{anecdote.content}</div>
           <div>
