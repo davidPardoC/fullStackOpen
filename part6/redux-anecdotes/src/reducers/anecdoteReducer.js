@@ -54,10 +54,9 @@ export const anecdoteCreator = (anecdote) => {
 
 export const voteAnecdote = (anecdote) => {
   return async (dispatch) => {
-    dispatch(vote(anecdote));
-    dispatch(
-      showNotificationCreator(`Voted ${anecdote.id} notification`, 2000)
-    );
+    const newNote = await anecdotesService.voteAnecdote(anecdote);
+    dispatch(vote(newNote));
+    dispatch(showNotificationCreator(`Voted ${newNote.id} notification`, 2000));
   };
 };
 
