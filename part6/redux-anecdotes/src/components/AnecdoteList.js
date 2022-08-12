@@ -1,6 +1,10 @@
 import React from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { vote as voteAction } from "../reducers/anecdoteReducer";
+import {
+  initializeAnecdotes,
+  vote as voteAction,
+} from "../reducers/anecdoteReducer";
 
 const sortFunction = (a, b) => {
   if (a.votes < b.votes) {
@@ -11,11 +15,16 @@ const sortFunction = (a, b) => {
 };
 
 const AnecdoteList = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initializeAnecdotes());
+  }, [dispatch]);
+
   const {
     anecdotes,
     filter: { filter },
   } = useSelector((state) => state);
-  const dispatch = useDispatch();
 
   const vote = (id) => {
     dispatch(voteAction(id));
