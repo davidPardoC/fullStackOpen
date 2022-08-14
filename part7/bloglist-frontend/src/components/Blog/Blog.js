@@ -1,14 +1,19 @@
 import { useState } from 'react'
 import { useRef } from 'react'
-import blogService from '../services/blogs'
+import blogService from '../../services/blogs'
 import './Blog.css'
-import Togglable from './Togglable'
+import Togglable from '../Togglable'
 import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
+import { showNotificationCreator } from '../../reducers/notificationReducer'
 
-const Blog = ({ blog: listBlog, onDelete, onDeleteError }) => {
+const Blog = ({ blog: listBlog, onDelete }) => {
+  const dispatch = useDispatch()
   const [blog, setBlog] = useState(listBlog)
   const [visible, setVisible] = useState(false)
+
   const toggleRef = useRef(null)
+
   const toggle = () => {
     toggleRef.current.toggleVisisble()
     setVisible(!toggleRef.current.visible)
@@ -28,8 +33,10 @@ const Blog = ({ blog: listBlog, onDelete, onDeleteError }) => {
       try {
         await blogService.removeBlog(blog.id)
         onDelete()
+        dispatch(showNotificationCreator({ message: 'Blog deleted' }))
       } catch (error) {
-        onDeleteError(error)
+        const { message } = error
+        dispatch(showNotificationCreator({ message, error: true }))
       }
     }
   }

@@ -1,9 +1,12 @@
 import React from 'react'
 import { useState } from 'react'
-import blogService from '../services/blogs'
+import blogService from '../../services/blogs'
 import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
+import { showNotificationCreator } from '../../reducers/notificationReducer'
 
-const BlogForm = ({ onSuccess, onError }) => {
+const BlogForm = ({ onSuccess }) => {
+  const dispatch = useDispatch()
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -24,8 +27,10 @@ const BlogForm = ({ onSuccess, onError }) => {
     try {
       const newBlog = await blogService.createBog(blog)
       onSuccess(newBlog)
+      dispatch(showNotificationCreator({ message: `Blog ${title} added!` }))
     } catch (error) {
-      onError(error)
+      const { message } = error
+      dispatch(showNotificationCreator({ message, error: true }))
     }
   }
 
@@ -51,7 +56,6 @@ const BlogForm = ({ onSuccess, onError }) => {
 
 BlogForm.propTypes = {
   onSuccess: PropTypes.func.isRequired,
-  onError: PropTypes.func.isRequired,
 }
 
 export default BlogForm
