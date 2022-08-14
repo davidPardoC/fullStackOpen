@@ -22,8 +22,8 @@ const Blog = ({ blog: listBlog }) => {
 
   const likePost = async () => {
     const updatedBlog = await blogService.updateBlog({
-      ...listBlog,
-      likes: listBlog.likes + 1,
+      ...blog,
+      likes: blog.likes + 1,
     })
     setBlog(updatedBlog)
   }
