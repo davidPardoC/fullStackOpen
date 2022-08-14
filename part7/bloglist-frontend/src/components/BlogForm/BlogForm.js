@@ -4,6 +4,7 @@ import blogService from '../../services/blogs'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { showNotificationCreator } from '../../reducers/notificationReducer'
+import { addBlog } from '../../reducers/blogsReducer'
 
 const BlogForm = ({ onSuccess }) => {
   const dispatch = useDispatch()
@@ -26,7 +27,8 @@ const BlogForm = ({ onSuccess }) => {
     const blog = { title, author, url }
     try {
       const newBlog = await blogService.createBog(blog)
-      onSuccess(newBlog)
+      dispatch(addBlog(newBlog))
+      onSuccess()
       dispatch(showNotificationCreator({ message: `Blog ${title} added!` }))
     } catch (error) {
       const { message } = error

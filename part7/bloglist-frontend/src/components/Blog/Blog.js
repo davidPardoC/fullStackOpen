@@ -6,8 +6,9 @@ import Togglable from '../Togglable'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { showNotificationCreator } from '../../reducers/notificationReducer'
+import { initializeBlogs } from '../../reducers/blogsReducer'
 
-const Blog = ({ blog: listBlog, onDelete }) => {
+const Blog = ({ blog: listBlog }) => {
   const dispatch = useDispatch()
   const [blog, setBlog] = useState(listBlog)
   const [visible, setVisible] = useState(false)
@@ -32,8 +33,8 @@ const Blog = ({ blog: listBlog, onDelete }) => {
     if (shouldDeleteBlog) {
       try {
         await blogService.removeBlog(blog.id)
-        onDelete()
         dispatch(showNotificationCreator({ message: 'Blog deleted' }))
+        dispatch(initializeBlogs())
       } catch (error) {
         const { message } = error
         dispatch(showNotificationCreator({ message, error: true }))
@@ -66,7 +67,6 @@ const Blog = ({ blog: listBlog, onDelete }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  onDelete: PropTypes.func.isRequired,
 }
 
 export default Blog

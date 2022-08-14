@@ -1,15 +1,18 @@
 import { useRef } from 'react'
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Blog from './components/Blog/Blog'
 import BlogForm from './components/BlogForm/BlogForm'
 import LoginForm from './components/LoginForm/LoginForm'
 import Notification from './components/Notification/Notification'
 import Togglable from './components/Togglable'
 import UserInfo from './components/UserInfo'
+import { initializeBlogs } from './reducers/blogsReducer'
 import blogService from './services/blogs'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  const dispatch = useDispatch()
+  const blogs = useSelector((state) => state.blogs)
   const [user, setUser] = useState(null)
 
   const blogToggleRef = useRef(null)
@@ -19,30 +22,17 @@ const App = () => {
     setUser(user)
     if (user) {
       blogService.setToken(user.token)
-      getBlogs()
+      dispatch(initializeBlogs())
     }
   }, [])
 
   const onLogin = (user) => {
     setUser(user)
     blogService.setToken(user.token)
-    getBlogs()
+    dispatch(initializeBlogs())
   }
 
-  const getBlogs = () => {
-    blogService.getAll().then((blogs) => {
-      const sorted = blogs.sort((a, b) => {
-        if (a.likes > b.likes) {
-          return -1
-        }
-        return 1
-      })
-      setBlogs(sorted)
-    })
-  }
-
-  const onAddedBlog = (blog) => {
-    setBlogs(blogs.concat([blog]))
+  const onAddedBlog = () => {
     blogToggleRef.current.toggleVisisble()
   }
 
@@ -59,7 +49,7 @@ const App = () => {
             <BlogForm onSuccess={onAddedBlog} />
           </Togglable>
           {blogs.map((blog) => (
-            <Blog onDelete={getBlogs} key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} />
           ))}
         </>
       )}
