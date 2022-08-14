@@ -1,12 +1,14 @@
 import { useRef } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Route, Routes } from 'react-router-dom'
 import Blog from './components/Blog/Blog'
 import BlogForm from './components/BlogForm/BlogForm'
 import LoginForm from './components/LoginForm/LoginForm'
 import Notification from './components/Notification/Notification'
 import Togglable from './components/Togglable'
 import UserInfo from './components/UserInfo'
+import Users from './components/Users/Users'
 import { initializeBlogs } from './reducers/blogsReducer'
 import { setUser } from './reducers/userReducer'
 import blogService from './services/blogs'
@@ -32,23 +34,31 @@ const App = () => {
   }
 
   return (
-    <div>
-      <Notification />
-      {!user.isLoggedIn ? (
-        <LoginForm />
-      ) : (
-        <>
-          <h2>Blogs</h2>
-          <UserInfo user={user} />
-          <Togglable ref={blogToggleRef} label="Add Blog">
-            <BlogForm onSuccess={onAddedBlog} />
-          </Togglable>
-          {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} />
-          ))}
-        </>
-      )}
-    </div>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <div>
+            <Notification />
+            {!user.isLoggedIn ? (
+              <LoginForm />
+            ) : (
+              <>
+                <h2>Blogs</h2>
+                <UserInfo user={user} />
+                <Togglable ref={blogToggleRef} label="Add Blog">
+                  <BlogForm onSuccess={onAddedBlog} />
+                </Togglable>
+                {blogs.map((blog) => (
+                  <Blog key={blog.id} blog={blog} />
+                ))}
+              </>
+            )}
+          </div>
+        }
+      />
+      <Route path="/users" element={<Users />} />
+    </Routes>
   )
 }
 
