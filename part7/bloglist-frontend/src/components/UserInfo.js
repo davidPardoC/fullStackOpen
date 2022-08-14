@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { unsetUser } from '../reducers/userReducer'
 
 function parseJwt(token) {
   var base64Url = token.split('.')[1]
@@ -17,12 +19,13 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload)
 }
 
-const logout = () => {
-  localStorage.removeItem('userLogged')
-}
-
 const UserInfo = ({ user: { token = '' } }) => {
+  const dispatch = useDispatch()
   const user = parseJwt(token)
+  const logout = () => {
+    localStorage.removeItem('userLogged')
+    dispatch(unsetUser())
+  }
   return (
     <div>
       <p>
