@@ -1,0 +1,30 @@
+.success {
+  position: absolute;
+  right: 10px;
+  padding: 0.5rem;
+  border: 3px solid green;
+  border-radius: 0.5rem;
+  background-color: rgb(194, 193, 193);
+  color: green;
+  animation: enter 0.5s;
+}
+
+.error {
+  position: absolute;
+  right: 10px;
+  padding: 0.5rem;
+  border: 3px solid red;
+  border-radius: 0.5rem;
+  background-color: rgb(194, 193, 193);
+  color: red;
+  animation: enter 0.5s;
+}
+
+@keyframes enter {
+  from {
+    transform: translateY(-100px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
