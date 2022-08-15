@@ -7,6 +7,7 @@ import BlogForm from './components/BlogForm/BlogForm'
 import LoginForm from './components/LoginForm/LoginForm'
 import Notification from './components/Notification/Notification'
 import Togglable from './components/Togglable'
+import User from './components/User/User'
 import UserInfo from './components/UserInfo'
 import Users from './components/Users/Users'
 import { initializeBlogs } from './reducers/blogsReducer'
@@ -58,6 +59,7 @@ const App = () => {
         }
       />
       <Route path="/users" element={<Users />} />
+      <Route path="/users/:id" element={<User />} />
     </Routes>
   )
 }

@@ -8,6 +8,16 @@ const getAll = async () => {
   return data
 }
 
-const usersServices = { getAll }
+/**
+ *
+ * @param {String} id userId
+ * @returns
+ */
+const getUser = async (id) => {
+  const { data } = await axios.get(`/api/users/${id}`)
+  return data
+}
+
+const usersServices = { getAll, getUser }
 
 export default usersServices
