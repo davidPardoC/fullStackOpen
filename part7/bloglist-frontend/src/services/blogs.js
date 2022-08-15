@@ -31,6 +31,18 @@ const removeBlog = async (id) => {
   return data
 }
 
-const blogService = { getAll, createBog, setToken, updateBlog, removeBlog }
+const getBlog = async (id) => {
+  const { data } = await axios.get(`${baseUrl}/${id}`)
+  return data
+}
+
+const blogService = {
+  getAll,
+  createBog,
+  setToken,
+  updateBlog,
+  removeBlog,
+  getBlog,
+}
 
 export default blogService

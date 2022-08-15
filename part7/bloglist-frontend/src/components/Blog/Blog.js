@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { showNotificationCreator } from '../../reducers/notificationReducer'
 import { initializeBlogs } from '../../reducers/blogsReducer'
+import { Link } from 'react-router-dom'
 
 const Blog = ({ blog: listBlog }) => {
   const dispatch = useDispatch()
@@ -46,7 +47,7 @@ const Blog = ({ blog: listBlog }) => {
     <div className="blog">
       <div>
         <div className="blogHeader">
-          <div>{blog.title}</div>
+          <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
           <div>{blog.author}</div>
         </div>
 

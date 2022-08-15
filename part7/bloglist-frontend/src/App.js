@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import Blog from './components/Blog/Blog'
 import BlogForm from './components/BlogForm/BlogForm'
+import BlogView from './components/BlogView/BlogView'
 import LoginForm from './components/LoginForm/LoginForm'
 import Notification from './components/Notification/Notification'
 import Togglable from './components/Togglable'
@@ -60,6 +61,7 @@ const App = () => {
       />
       <Route path="/users" element={<Users />} />
       <Route path="/users/:id" element={<User />} />
+      <Route path="/blogs/:id" element={<BlogView />} />
     </Routes>
   )
 }
