@@ -27,12 +27,10 @@ const UserInfo = ({ user: { token = '' } }) => {
     dispatch(unsetUser())
   }
   return (
-    <div>
-      <p>
-        <b>Username: </b> {user.username} logged in
-        <button onClick={logout}>Logout</button>
-      </p>
-    </div>
+    <>
+      <span> {user.username} logged in </span>
+      <button onClick={logout}>Logout</button>
+    </>
   )
 }
 
