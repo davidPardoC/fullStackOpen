@@ -5,11 +5,14 @@ import App from './App'
 import './store'
 import { store } from './store'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { ChakraProvider } from '@chakra-ui/react'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
+    <ChakraProvider>
+      <Router>
+        <App />
+      </Router>
+    </ChakraProvider>
   </Provider>
 )

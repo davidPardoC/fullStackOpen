@@ -1,3 +1,4 @@
+import { Button } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useDispatch } from 'react-redux'
@@ -32,7 +33,9 @@ const UserInfo = ({ user: { token = '' } }) => {
   return (
     <>
       <span> {user.username} logged in </span>
-      <button onClick={logout}>Logout</button>
+      <Button onClick={logout} colorScheme="blue" size="xs">
+        Logout
+      </Button>
     </>
   )
 }

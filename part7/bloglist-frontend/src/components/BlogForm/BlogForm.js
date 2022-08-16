@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { showNotificationCreator } from '../../reducers/notificationReducer'
 import { addBlog } from '../../reducers/blogsReducer'
+import { Button } from '@chakra-ui/react'
 
 const BlogForm = ({ onSuccess }) => {
   const dispatch = useDispatch()
@@ -51,7 +52,7 @@ const BlogForm = ({ onSuccess }) => {
         <label htmlFor="title">Url: </label>
         <input type="text" id="title" value={url} onChange={handleUrl} />
       </div>
-      <input type="submit" value="Create" />
+      <Button colorScheme="facebook">Create</Button>
     </form>
   )
 }
