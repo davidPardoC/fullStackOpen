@@ -21,6 +21,12 @@ const BlogView = () => {
           {blog.likes} likes <button>like</button>
         </p>
         <p>Added by {blog.user.name}</p>
+        <h4>Comments</h4>
+        <ul>
+          {blog.comments.map((comment, idx) => (
+            <li key={idx}>{comment}</li>
+          ))}
+        </ul>
       </div>
     )
   )

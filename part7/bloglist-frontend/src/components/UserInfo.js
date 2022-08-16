@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { unsetUser } from '../reducers/userReducer'
 
 function parseJwt(token) {
@@ -21,10 +22,12 @@ function parseJwt(token) {
 
 const UserInfo = ({ user: { token = '' } }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const user = parseJwt(token)
   const logout = () => {
     localStorage.removeItem('userLogged')
     dispatch(unsetUser())
+    navigate('/login')
   }
   return (
     <>
