@@ -1,3 +1,4 @@
+import { Table, TableContainer, Td, Th, Thead, Tr } from '@chakra-ui/react'
 import React from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,24 +15,26 @@ const Users = () => {
   return (
     <>
       <h3>Users</h3>
-      <table>
-        <thead>
-          <tr>
-            <td>Users</td>
-            <td>Blogs Created</td>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user._id}>
-              <td>
-                <Link to={`/users/${user._id}`}>{user.name}</Link>
-              </td>
-              <td>{user.blogs.length}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <TableContainer>
+        <Table variant="simple">
+          <Thead>
+            <Tr>
+              <Th>Users</Th>
+              <Th>Blogs Created</Th>
+            </Tr>
+          </Thead>
+          <tbody>
+            {users.map((user) => (
+              <Tr key={user._id}>
+                <Td>
+                  <Link to={`/users/${user._id}`}>{user.name}</Link>
+                </Td>
+                <Td>{user.blogs.length}</Td>
+              </Tr>
+            ))}
+          </tbody>
+        </Table>
+      </TableContainer>
     </>
   )
 }

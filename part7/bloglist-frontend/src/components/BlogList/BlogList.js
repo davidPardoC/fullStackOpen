@@ -1,3 +1,4 @@
+import { Heading } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from '../../reducers/blogsReducer'
@@ -27,7 +28,7 @@ const BlogList = () => {
   return (
     <div>
       <>
-        <h2>Blogs</h2>
+        <Heading>Blogs</Heading>
         <Togglable ref={blogToggleRef} label="Add Blog">
           <BlogForm onSuccess={onAddedBlog} />
         </Togglable>

@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { showNotificationCreator } from '../../reducers/notificationReducer'
 import { initializeBlogs } from '../../reducers/blogsReducer'
 import { Link } from 'react-router-dom'
+import { Box, Button, Flex } from '@chakra-ui/react'
 
 const Blog = ({ blog: listBlog }) => {
   const dispatch = useDispatch()
@@ -44,25 +45,32 @@ const Blog = ({ blog: listBlog }) => {
   }
 
   return (
-    <div className="blog">
-      <div>
+    <Box p={2} margin={2} borderRadius={4} boxShadow="1px 1px 3px #000000">
+      <Flex justifyContent="space-between">
         <div className="blogHeader">
           <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
           <div>{blog.author}</div>
         </div>
 
-        <button onClick={toggle}>{visible ? 'hide' : 'show'}</button>
-      </div>
+        <Button colorScheme="blackAlpha" onClick={toggle}>
+          {visible ? 'hide' : 'show'}
+        </Button>
+      </Flex>
       <Togglable ref={toggleRef} showButton={false}>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Flex flexDirection={'column'} alignItems="flex-start">
           <div>{blog.url}</div>
           <div>
-            likes: {blog.likes} <button onClick={likePost}>like</button>
+            Likes: {blog.likes}{' '}
+            <Button margin={1} onClick={likePost}>
+              like
+            </Button>
           </div>
-          <button onClick={deletePost}>Remove</button>
-        </div>
+          <Button colorScheme="red" onClick={deletePost}>
+            Remove
+          </Button>
+        </Flex>
       </Togglable>
-    </div>
+    </Box>
   )
 }
 

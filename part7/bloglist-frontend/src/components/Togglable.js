@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 import './Togglable.css'
+import { Button } from '@chakra-ui/react'
 
 const Togglable = forwardRef(
   ({ children, label = '', showButton = true }, refs) => {
@@ -15,7 +16,7 @@ const Togglable = forwardRef(
       setVisible(!visible)
     }
     useEffect(() => {
-      const childHeightRaw = ref.current.clientHeight + 60
+      const childHeightRaw = ref.current.clientHeight + 120
       const childHeight = `${childHeightRaw / 16}rem`
       setChildHeight(childHeight)
     }, [])
@@ -36,9 +37,9 @@ const Togglable = forwardRef(
           <div ref={ref}>{children}</div>
         </div>
         {showButton && (
-          <button onClick={toggleVisisble}>
-            {!visible ? label : 'cancel'}
-          </button>
+          <Button onClick={toggleVisisble} colorScheme="linkedin">
+            {!visible ? label : 'Cancel'}
+          </Button>
         )}
       </div>
     )
