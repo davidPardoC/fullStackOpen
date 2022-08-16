@@ -36,6 +36,11 @@ const getBlog = async (id) => {
   return data
 }
 
+const commentBlog = async (id, comment) => {
+  const { data } = await axios.post(`${baseUrl}/${id}/comments`, { comment })
+  return data
+}
+
 const blogService = {
   getAll,
   createBog,
@@ -43,6 +48,7 @@ const blogService = {
   updateBlog,
   removeBlog,
   getBlog,
+  commentBlog,
 }
 
 export default blogService

@@ -52,10 +52,10 @@ blogRouter.get('/:id', async (req, res) => {
   res.json(blog)
 })
 
-blogRouter.post('/:id', async (req, res) => {
+blogRouter.post('/:id/comments', async (req, res) => {
   const { id } = req.params
   const { comment } = req.body
-  const blog = Blog.findById(id)
+  const blog = await Blog.findById(id)
   blog.comments.push(comment)
   const updatedBlog = await blog.save()
   res.json(updatedBlog)
