@@ -9,6 +9,7 @@ import {
   InMemoryCache,
   ApolloProvider,
 } from "@apollo/client";
+import { NotificationProvider } from "./context/NotificationContext";
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -19,7 +20,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <NotificationProvider>
+      <App />
+    </NotificationProvider>
   </ApolloProvider>,
   document.getElementById("root")
 );

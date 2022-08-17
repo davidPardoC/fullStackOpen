@@ -1,6 +1,18 @@
+import { useMutation } from "@apollo/client";
+import { useContext } from "react";
 import { useState } from "react";
+import { NotificationContext } from "../context/NotificationContext";
+import { ADD_BOOK } from "../graphql/mutations";
+import { ALL_BOOKS } from "../graphql/queries";
 
-const NewBook = (props) => {
+const NewBook = () => {
+  const { showNotification } = useContext(NotificationContext);
+  const [createBook] = useMutation(ADD_BOOK, {
+    refetchQueries: [{ query: ALL_BOOKS }],
+    onError: () => {
+      showNotification("Error adding new book");
+    },
+  });
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [published, setPublished] = useState("");
@@ -10,7 +22,9 @@ const NewBook = (props) => {
   const submit = async (event) => {
     event.preventDefault();
 
-    console.log("add book...");
+    createBook({
+      variables: { title, author, published /* : Number(published) */, genres },
+    });
 
     setTitle("");
     setPublished("");
@@ -20,8 +34,10 @@ const NewBook = (props) => {
   };
 
   const addGenre = () => {
-    setGenres(genres.concat(genre));
-    setGenre("");
+    if (genre) {
+      setGenres(genres.concat(genre));
+      setGenre("");
+    }
   };
 
   return (
