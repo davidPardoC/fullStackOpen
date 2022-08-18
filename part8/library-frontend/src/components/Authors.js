@@ -50,12 +50,15 @@ const Authors = () => {
         <h3>Set birthyear</h3>
         <div>
           <label>Name:</label>
-          <input
+          <select
             className="form-control"
-            type="text"
             {...form.author}
             onChange={form.onChange}
-          />
+          >
+            {result.data.allAuthors.map((a) => (
+              <option key={a.name}>{a.name}</option>
+            ))}
+          </select>
         </div>
         <div>
           <label>Born:</label>
