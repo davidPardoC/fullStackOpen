@@ -23,7 +23,7 @@ const NewBook = () => {
     event.preventDefault();
 
     createBook({
-      variables: { title, author, published /* : Number(published) */, genres },
+      variables: { title, author, published: Number(published), genres },
     });
 
     setTitle("");

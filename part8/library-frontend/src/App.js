@@ -7,7 +7,7 @@ import Notification from "./components/Notification";
 import { NotificationContext } from "./context/NotificationContext";
 
 const App = () => {
-  const [page, setPage] = useState("books");
+  const [page, setPage] = useState("authors");
   const { show, message } = useContext(NotificationContext);
 
   return (
