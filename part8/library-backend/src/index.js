@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require("apollo-server");
+require("./config/database");
 
 let authors = [
   {
@@ -92,8 +93,8 @@ const typeDefs = gql`
   type Book {
     title: String!
     published: Int!
-    author: String!
-    id: String!
+    author: Author!
+    id: ID!
     genres: [String!]
   }
 
