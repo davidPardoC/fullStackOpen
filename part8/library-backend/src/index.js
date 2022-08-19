@@ -150,22 +150,26 @@ const resolvers = {
         const book = new BookModel(args);
         return await book.save();
       } catch (error) {
-        throw error;
+        throw new UserInputError(error.name, error);
       }
     },
     editAuthor: async (root, args) => {
-      const { name, setBornTo } = args;
-      const author = await AuthorModel.findOne({ name });
-      author.born = setBornTo;
-      const newAuthor = await author.save();
-      return newAuthor;
+      try {
+        const { name, setBornTo } = args;
+        const author = await AuthorModel.findOne({ name });
+        author.born = setBornTo;
+        const newAuthor = await author.save();
+        return newAuthor;
+      } catch (error) {
+        throw new UserInputError(error.name, error);
+      }
     },
     addAuthor: async (root, args) => {
       const author = new AuthorModel(args);
       try {
         return await author.save();
       } catch (error) {
-        console.log(error);
+        throw new UserInputError(error.name, error);
       }
     },
   },
