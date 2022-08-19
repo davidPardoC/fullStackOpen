@@ -1,13 +1,13 @@
+const AuthorModel = require("../Models/Author.model");
 const BookModel = require("../Models/Book.model");
-const UserModel = require("../Models/User.model");
 
 const allBooks = async (root, args) => {
   const { author } = args;
   if (author) {
-    const books = await BookModel.find({ author });
+    const books = await BookModel.find({ author }).populate("author");
     return books;
   }
-  const books = await BookModel.find();
+  const books = await BookModel.find().populate("author");
   return books;
 };
 

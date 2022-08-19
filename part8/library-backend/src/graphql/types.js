@@ -4,7 +4,7 @@ const commonTypes = gql`
   type Book {
     title: String!
     published: Int!
-    author: ID!
+    author: Author!
     id: ID!
     genres: [String!]
   }

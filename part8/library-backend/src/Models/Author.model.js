@@ -11,5 +11,6 @@ const schema = new mongoose.Schema({
     type: Number,
   },
 });
+
 const AuthorModel = mongoose.model("Author", schema);
 module.exports = AuthorModel;
