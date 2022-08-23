@@ -1,20 +1,17 @@
-import { useQuery } from "@apollo/client";
-import { useState } from "react";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
 import { ALL_BOOKS } from "../graphql/queries";
 
 const Books = (props) => {
-  const [genre, setGenre] = useState("");
-  const result = useQuery(ALL_BOOKS);
-  if (result.loading) {
+  const [getAllBooks, result] = useLazyQuery(ALL_BOOKS);
+
+  useEffect(() => {
+    getAllBooks();
+  }, []);
+
+  if (!result.data) {
     return <p> Loading...</p>;
   }
-
-  const getBooks = () => {
-    if (!genre) {
-      return result.data.allBooks;
-    }
-    return result.data.allBooks.filter((book) => book.genres.includes(genre));
-  };
 
   const genres = () => {
     const genres = result.data.allBooks
@@ -25,7 +22,7 @@ const Books = (props) => {
   };
 
   const onChangeGenre = (e) => {
-    setGenre(e.target.value);
+    getAllBooks({ variables: { genre: e.target.value } });
   };
 
   return (
@@ -39,7 +36,7 @@ const Books = (props) => {
             <th>author</th>
             <th>published</th>
           </tr>
-          {getBooks().map((a) => (
+          {result.data.allBooks.map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>

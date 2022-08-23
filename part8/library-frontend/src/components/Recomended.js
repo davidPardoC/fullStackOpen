@@ -1,28 +1,22 @@
-import { useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import { useEffect } from "react";
 import { ALL_BOOKS, ME } from "../graphql/queries";
 
 const Recomended = (props) => {
-  const [genre, setGenre] = useState("");
-  const result = useQuery(ALL_BOOKS);
   const meResult = useQuery(ME);
+  const [getAllBooks, { data }] = useLazyQuery(ALL_BOOKS);
 
   useEffect(() => {
     if (meResult.data?.me) {
-      setGenre(meResult.data.me.favouriteGenre);
+      getAllBooks({
+        variables: { genre: meResult.data.me.favouriteGenre },
+      });
     }
   }, [meResult.data]);
 
-  if (result.loading || meResult.loading) {
+  if (!data) {
     return <p> Loading...</p>;
   }
-
-  const getBooks = () => {
-    if (!genre) {
-      return result.data.allBooks;
-    }
-    return result.data.allBooks.filter((book) => book.genres.includes(genre));
-  };
 
   return (
     <div>
@@ -37,7 +31,7 @@ const Recomended = (props) => {
             <th>author</th>
             <th>published</th>
           </tr>
-          {getBooks().map((a) => (
+          {data.allBooks.map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>
