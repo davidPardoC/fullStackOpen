@@ -42,7 +42,7 @@ const mutationTypes = gql`
     addAuthor(name: String!, born: Int, books: Int): Author
     addBook(
       title: String!
-      author: ID!
+      author: String!
       published: Int!
       genres: [String!]!
     ): Book

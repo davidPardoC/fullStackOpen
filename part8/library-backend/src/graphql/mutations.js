@@ -10,14 +10,19 @@ const addBook = async (root, args, context) => {
     throw new AuthenticationError("not authenticated");
   }
   try {
-    const book = new BookModel(args);
+    let author = await AuthorModel.findOne({ name: args.author });
+    if (!author) {
+      const newAuthor = new AuthorModel({ name: args.author });
+      author = await newAuthor.save();
+    }
+    const book = new BookModel({ ...args, author: author._id });
     return await book.save();
   } catch (error) {
     throw new UserInputError(error.name, error);
   }
 };
 
-const editAuthor = async (root, args) => {
+const editAuthor = async (root, args, context) => {
   if (!context.currentUser) {
     throw new AuthenticationError("not authenticated");
   }
@@ -53,6 +58,9 @@ const addUser = async (roott, args) => {
 const login = async (root, args, context) => {
   const { username } = args;
   const me = await UserModel.findOne({ username });
+  if (!me) {
+    throw new AuthenticationError();
+  }
   return { value: jwt.sign(me.toJSON(), tokenSecret) };
 };
 

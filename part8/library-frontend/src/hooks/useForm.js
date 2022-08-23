@@ -9,5 +9,12 @@ export const useForm = (initialState) => {
     newState[e.target.name].value = e.target.value;
     setState(newState);
   };
-  return { ...state, onChange };
+
+  const setValue = (inputName, value) => {
+    const newState = { ...state };
+    newState[inputName].value = value;
+    setState(newState);
+  };
+
+  return { ...state, onChange, setValue };
 };

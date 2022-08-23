@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import Authors from "./components/Authors";
 import Books from "./components/Books";
+import Login from "./components/Login";
 import NewBook from "./components/NewBook";
 import Notification from "./components/Notification";
 import { NotificationContext } from "./context/NotificationContext";
@@ -33,6 +34,12 @@ const App = () => {
           >
             add book
           </button>
+          <button
+            className="btn btn-outline-primary"
+            onClick={() => setPage("login")}
+          >
+            login
+          </button>
         </div>
 
         {page === "authors" && <Authors />}
@@ -40,6 +47,8 @@ const App = () => {
         {page === "books" && <Books />}
 
         {page === "add" && <NewBook />}
+
+        {page === "login" && <Login />}
       </div>
     </>
   );

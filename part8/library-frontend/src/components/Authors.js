@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ALL_AUTHORS } from "../graphql/queries";
 import { EDIT_AUTHOR } from "../graphql/mutations";
 import { useForm } from "../hooks/useForm";
+import { useEffect } from "react";
 
 const Authors = () => {
   const result = useQuery(ALL_AUTHORS);
@@ -12,6 +13,10 @@ const Authors = () => {
   const [editAuthor] = useMutation(EDIT_AUTHOR, {
     refetchQueries: [{ query: ALL_AUTHORS }],
   });
+
+  useEffect(() => {
+    form.setValue("author", result.data?.allAuthors[0].name);
+  }, [result.data]);
 
   if (result.loading) {
     return <p>Loading...</p>;
