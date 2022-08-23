@@ -22,3 +22,13 @@ export const ALL_AUTHORS = gql`
     }
   }
 `;
+
+export const ME = gql`
+  query Query {
+    me {
+      username
+      favouriteGenre
+      id
+    }
+  }
+`;

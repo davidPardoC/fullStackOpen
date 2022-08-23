@@ -5,6 +5,7 @@ import Books from "./components/Books";
 import Login from "./components/Login";
 import NewBook from "./components/NewBook";
 import Notification from "./components/Notification";
+import Recomended from "./components/Recomended";
 import { NotificationContext } from "./context/NotificationContext";
 
 const App = () => {
@@ -36,6 +37,12 @@ const App = () => {
           </button>
           <button
             className="btn btn-outline-primary"
+            onClick={() => setPage("recommended")}
+          >
+            recommended
+          </button>
+          <button
+            className="btn btn-outline-primary"
             onClick={() => setPage("login")}
           >
             login
@@ -49,6 +56,7 @@ const App = () => {
         {page === "add" && <NewBook />}
 
         {page === "login" && <Login />}
+        {page === "recommended" && <Recomended />}
       </div>
     </>
   );

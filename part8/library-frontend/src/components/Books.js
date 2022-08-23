@@ -48,7 +48,7 @@ const Books = (props) => {
           ))}
         </tbody>
       </table>
-      <div className="btn-group">
+      <div className="d-flex flex-wrap">
         {genres().map((genre) => (
           <button
             className="btn btn-success"
