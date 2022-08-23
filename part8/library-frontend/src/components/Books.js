@@ -1,11 +1,32 @@
 import { useQuery } from "@apollo/client";
+import { useState } from "react";
 import { ALL_BOOKS } from "../graphql/queries";
 
 const Books = (props) => {
+  const [genre, setGenre] = useState("");
   const result = useQuery(ALL_BOOKS);
   if (result.loading) {
     return <p> Loading...</p>;
   }
+
+  const getBooks = () => {
+    if (!genre) {
+      return result.data.allBooks;
+    }
+    return result.data.allBooks.filter((book) => book.genres.includes(genre));
+  };
+
+  const genres = () => {
+    const genres = result.data.allBooks
+      .map((book) => book.genres)
+      .reduce((preValue, currentValue) => preValue.concat(currentValue));
+    const uniqueGenres = [...new Set(genres)];
+    return uniqueGenres;
+  };
+
+  const onChangeGenre = (e) => {
+    setGenre(e.target.value);
+  };
 
   return (
     <div>
@@ -18,7 +39,7 @@ const Books = (props) => {
             <th>author</th>
             <th>published</th>
           </tr>
-          {result.data.allBooks.map((a) => (
+          {getBooks().map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>
@@ -27,6 +48,21 @@ const Books = (props) => {
           ))}
         </tbody>
       </table>
+      <div className="btn-group">
+        {genres().map((genre) => (
+          <button
+            className="btn btn-success"
+            key={genre}
+            value={genre}
+            onClick={onChangeGenre}
+          >
+            {genre}
+          </button>
+        ))}
+        <button className="btn btn-success" value={""} onClick={onChangeGenre}>
+          All
+        </button>
+      </div>
     </div>
   );
 };
