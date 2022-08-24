@@ -13,7 +13,7 @@ const commonTypes = gql`
     name: String!
     id: ID!
     born: Int
-    books: Int
+    books: [ID]
   }
 
   type User {
