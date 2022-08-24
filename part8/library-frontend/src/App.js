@@ -1,4 +1,4 @@
-import { gql, useSubscription } from "@apollo/client";
+import { gql, useApolloClient, useSubscription } from "@apollo/client";
 import { useContext } from "react";
 import { useState } from "react";
 import Authors from "./components/Authors";
@@ -8,6 +8,7 @@ import NewBook from "./components/NewBook";
 import Notification from "./components/Notification";
 import Recomended from "./components/Recomended";
 import { NotificationContext } from "./context/NotificationContext";
+import { ALL_BOOKS } from "./graphql/queries";
 
 const BOOK_ADDED = gql`
   subscription Subscription {
@@ -22,11 +23,18 @@ const BOOK_ADDED = gql`
 
 const App = () => {
   const [page, setPage] = useState("authors");
-  const { show, message } = useContext(NotificationContext);
+  const { show, message, showNotification } = useContext(NotificationContext);
 
+  const client = useApolloClient();
   useSubscription(BOOK_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
-      console.log(subscriptionData.data);
+      const bookAdded = subscriptionData.data.bookAdded;
+      showNotification("Book Added");
+      client.cache.updateQuery({ query: ALL_BOOKS }, ({ allBooks }) => {
+        return {
+          allBooks: allBooks.concat(bookAdded),
+        };
+      });
     },
   });
 
