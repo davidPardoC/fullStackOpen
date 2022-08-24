@@ -4,6 +4,8 @@ const BookModel = require("../Models/Book.model");
 const UserModel = require("../Models/User.model");
 const jwt = require("jsonwebtoken");
 const { tokenSecret } = require("../config/config");
+const { PubSub } = require("graphql-subscriptions");
+const pubsub = new PubSub();
 
 const addBook = async (root, args, context) => {
   if (!context.currentUser) {
@@ -16,7 +18,8 @@ const addBook = async (root, args, context) => {
       author = await newAuthor.save();
     }
     const book = new BookModel({ ...args, author: author._id });
-    return await book.save();
+    const newBook = await book.save();
+    return newBook;
   } catch (error) {
     throw new UserInputError(error.name, error);
   }

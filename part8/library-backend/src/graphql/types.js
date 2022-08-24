@@ -49,7 +49,14 @@ const mutationTypes = gql`
     editAuthor(name: String!, setBornTo: Int!): Author
     createUser(username: String!, favouriteGenre: String!): User
     login(username: String!, password: String!): Token
+    addUser(username: String!, password: String!): User
   }
 `;
 
-module.exports = { commonTypes, queryTypes, mutationTypes };
+const subscriptionTypes = gql`
+  type Subscription {
+    bookAdded: Book!
+  }
+`;
+
+module.exports = { commonTypes, queryTypes, mutationTypes, subscriptionTypes };
