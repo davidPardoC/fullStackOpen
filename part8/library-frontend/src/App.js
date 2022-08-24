@@ -1,3 +1,4 @@
+import { gql, useSubscription } from "@apollo/client";
 import { useContext } from "react";
 import { useState } from "react";
 import Authors from "./components/Authors";
@@ -8,9 +9,26 @@ import Notification from "./components/Notification";
 import Recomended from "./components/Recomended";
 import { NotificationContext } from "./context/NotificationContext";
 
+const BOOK_ADDED = gql`
+  subscription Subscription {
+    bookAdded {
+      title
+      published
+      id
+      genres
+    }
+  }
+`;
+
 const App = () => {
   const [page, setPage] = useState("authors");
   const { show, message } = useContext(NotificationContext);
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      console.log(subscriptionData.data);
+    },
+  });
 
   return (
     <>
