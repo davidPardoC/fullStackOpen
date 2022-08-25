@@ -29,4 +29,6 @@ const calculateExcersies = (
   return result;
 };
 
-console.log(calculateExcersies([3, 0, 2, 4.5, 0, 3, 1], 2));
+const trainigPerDay = process.argv.slice(-10, -1).map((time) => Number(time));
+const target = Number(process.argv[process.argv.length - 1]);
+console.log(calculateExcersies(trainigPerDay, target));

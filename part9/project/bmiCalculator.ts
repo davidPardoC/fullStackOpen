@@ -24,4 +24,6 @@ const calculateBmi = (weigth: number, heigth: number): string => {
   return `${interpretation} ${bmi}`;
 };
 
-console.log(calculateBmi(85, 172));
+const { 2: weigth, 3: heigth } = process.argv;
+
+console.log(calculateBmi(Number(weigth), Number(heigth)));
