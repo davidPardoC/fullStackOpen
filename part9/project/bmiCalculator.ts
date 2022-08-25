@@ -4,7 +4,7 @@
  * @param heigth in cm
  * @returns the calculated bmi
  */
-const calculateBmi = (weigth: number, heigth: number): string => {
+export const calculateBmi = (weigth: number, heigth: number): string => {
   const heigthInMeters = heigth / 100;
   const bmi = weigth / (heigthInMeters * heigthInMeters);
   let interpretation = "Normal";
@@ -23,7 +23,3 @@ const calculateBmi = (weigth: number, heigth: number): string => {
   }
   return `${interpretation} ${bmi}`;
 };
-
-const { 2: weigth, 3: heigth } = process.argv;
-
-console.log(calculateBmi(Number(weigth), Number(heigth)));
