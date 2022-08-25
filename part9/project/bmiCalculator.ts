@@ -4,7 +4,7 @@
  * @param heigth in cm
  * @returns the calculated bmi
  */
-const calculateBmi = (weigth: number, heigth: number) => {
+const calculateBmi = (weigth: number, heigth: number): string => {
   const heigthInMeters = heigth / 100;
   const bmi = weigth / (heigthInMeters * heigthInMeters);
   let interpretation = "Normal";
