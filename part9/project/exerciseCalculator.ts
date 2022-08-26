@@ -7,7 +7,7 @@ type ResultType = {
   ratingDescription?: string;
 };
 
-const calculateExcersies = (
+export const calculateExcersies = (
   hourTrainigDays: number[],
   averageTarget: number
 ) => {
@@ -24,11 +24,7 @@ const calculateExcersies = (
   if (average > averageTarget - 0.5) {
     result.ratingDescription = "not too bad but could be better";
   } else {
-    result.ratingDescription = "bad  could be better";
+    result.ratingDescription = "bad";
   }
   return result;
 };
-
-const trainigPerDay = process.argv.slice(-10, -1).map((time) => Number(time));
-const target = Number(process.argv[process.argv.length - 1]);
-console.log(calculateExcersies(trainigPerDay, target));
